@@ -1,6 +1,5 @@
 import { ShoppingCart } from "phosphor-react";
 
-import coffeeExpressoImg from "../../assets/CafeExpresso.png";
 import { QuantityInput } from "../QuantityInput";
 import { RegularText, TitleText } from "../Typography";
 import {
