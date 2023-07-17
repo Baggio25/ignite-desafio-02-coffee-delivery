@@ -6,6 +6,10 @@ export const HeaderContainer = styled.header`
   justify-content: center;
   width: 100%;
   height: 6.5rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 5;
   background: ${({ theme }) => theme.colors["base-background"]};
 
   > div {
