@@ -6,6 +6,7 @@ export const CompleteOrderFormContainer = styled.div`
   flex-direction: column;
   gap: 0.75rem;
   width: 40rem;
+  margin-bottom: 4rem;
 `;
 
 export const FormSectionContainer = styled(SectionBaseStyle)`
@@ -34,5 +35,10 @@ export const AddressFormContainer = styled.div`
   .complement {
     grid-column: span 2;
   }
+`;
 
+export const PaymentMethodOptionsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
 `;

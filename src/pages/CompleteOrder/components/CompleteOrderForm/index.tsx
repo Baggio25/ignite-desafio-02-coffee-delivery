@@ -1,11 +1,12 @@
 import { useTheme } from "styled-components";
-import { MapPinLine } from "phosphor-react";
+import { MapPinLine, CurrencyDollar } from "phosphor-react";
 
 import { SectionTitle } from "../SectionTitle";
 import { TitleText } from "../../../../components/Typography";
+import { AddressForm } from "./AddressForm";
+import { PaymentMethodOptions } from "./PaymentMethodOptions";
 
 import { CompleteOrderFormContainer, FormSectionContainer } from "./styles";
-import { AddressForm } from "./AddressForm";
 
 export function CompleteOrderForm() {
   const { colors } = useTheme();
@@ -22,8 +23,16 @@ export function CompleteOrderForm() {
           subtitle="Informe o endereço onde deseja receber seu pedido"
           icon={<MapPinLine size={22} color={colors["brand-yellow-dark"]} />}
         />
-
         <AddressForm />
+      </FormSectionContainer>
+
+      <FormSectionContainer>
+        <SectionTitle
+          title="Pagamento"
+          subtitle="O pagamento é feito na entrega. Escolha a forma que deseja pagar"
+          icon={<CurrencyDollar size={22} color={colors["brand-purple"]} />}
+        />
+        <PaymentMethodOptions />
       </FormSectionContainer>
     </CompleteOrderFormContainer>
   );
