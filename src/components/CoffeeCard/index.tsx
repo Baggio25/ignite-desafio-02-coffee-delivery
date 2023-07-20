@@ -1,7 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import { useState } from "react";
 import { ShoppingCart } from "phosphor-react";
 
 import { QuantityInput } from "../QuantityInput";
 import { RegularText, TitleText } from "../Typography";
+import { useCart } from "../../hooks/useCart";
+import { formatMoney } from "../../utils/formatMoney";
 import {
   AddCartWrapper,
   CardFooter,
@@ -10,9 +16,8 @@ import {
   Name,
   Tags,
 } from "./styles";
-import { formatMoney } from "../../utils/formatMoney";
 
-interface Coffe {
+export interface Coffe {
   id: number;
   tags: string[];
   name: string;
@@ -26,7 +31,27 @@ interface CoffeProps {
 }
 
 export function CoffeeCard({ coffee }: CoffeProps) {
+
+  const [ quantity, setQuantity ] = useState(1);
+  const { addCoffeeToCart } = useCart();
   const formattedPrice = formatMoney(coffee.price);
+
+  function handleAddToCart() {
+    const coffeeToAdd = {
+      ...coffee, 
+      quantity
+    }
+
+    addCoffeeToCart(coffeeToAdd);
+  }
+
+  function handleIncrease() {
+    setQuantity((state: number) => state + 1);
+  }
+
+  function handleDecrease() {
+    setQuantity((state: number) => state - 1);
+  }
 
   return (
     <CoffeeCardContainer>
@@ -50,8 +75,12 @@ export function CoffeeCard({ coffee }: CoffeProps) {
         </div>
 
         <AddCartWrapper>
-          <QuantityInput />
-          <button>
+          <QuantityInput
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+            quantity={quantity}
+          />
+          <button onClick={handleAddToCart}>
             <ShoppingCart size={22} weight="fill" />
           </button>
         </AddCartWrapper>

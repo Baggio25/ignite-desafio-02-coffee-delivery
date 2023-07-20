@@ -2,27 +2,59 @@ import { Trash } from "phosphor-react";
 
 import { QuantityInput } from "../../../../components/QuantityInput";
 import { RegularText } from "../../../../components/Typography";
+import { CartItem } from "../../../../contexts/CartContext";
 
-import coffeeImg from "../../../../assets/CafeExpresso.png";
+import { formatMoney } from "../../../../utils/formatMoney";
+import { useCart } from "../../../../hooks/useCart";
+
 import { ActionsContainer, CoffeeCartCardContainer, RemoveButton } from "./styles";
 
-export function CoffeeCartCard() {
+interface CoffeCartCardProps {
+  coffee: CartItem;
+}
+
+export function CoffeeCartCard({ coffee }: CoffeCartCardProps) {
+  const { changeCartItemQuantity, removeCartItem } = useCart();
+  const coffeeTotal = coffee.price * coffee.quantity;
+  const formatedPrice = formatMoney(coffeeTotal);
+
+  function handleIncrease() {
+    changeCartItemQuantity(coffee.id, "increase");
+  }
+
+  function handleDecrease() {
+    changeCartItemQuantity(coffee.id, "decrease");
+  }
+
+  function handleRemove() {
+    removeCartItem(coffee.id);
+  }
+
+
   return (
     <CoffeeCartCardContainer>
       <div>
-        <img src={coffeeImg} />
+        <img src={`/coffees/${coffee.photo}`} />
         <div>
-          <RegularText color="subtitle">Expresso Tradicional</RegularText>
+          <RegularText color="subtitle">{coffee.name}</RegularText>
           <ActionsContainer>
-            <QuantityInput size="small"/>
-            <RemoveButton>
+            <QuantityInput 
+              size="small"
+              quantity={coffee.quantity}
+              onDecrease={handleDecrease}
+              onIncrease={handleIncrease}
+            />
+            
+            <RemoveButton
+              onClick={handleRemove}
+            >
               <Trash size={16} />
               REMOVER
             </RemoveButton>
           </ActionsContainer>
         </div>
       </div>
-      <p>R$ 9,90</p>
+      <p>R$ {formatedPrice}</p>
     </CoffeeCartCardContainer>
   )
 }
